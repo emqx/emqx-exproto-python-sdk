@@ -39,26 +39,26 @@ class ConnectionInfo:
 
     def parser(self, connInfo):
         for info in connInfo:
-            key = info[0]
-            if key == b'socktype':
+            key = bytes.decode(info[0])
+            if key == 'socktype':
                 socktype = SockType()
                 self.socket_type = socktype.get_socktype(info[1])
-            elif key == b'peername':
+            elif key == 'peername':
                 ip_tuple, port = info[1]
                 self.peername_ip = '.'.join(map(str, ip_tuple))
                 self.peername_port = port
-            elif key == b'sockname':
+            elif key == 'sockname':
                 self.socket_ip = '.'.join(map(str, ip_tuple))
                 self.socket_name = port
-            elif key == b'peercert':
-                cert_info = info[1]
-                if cert_info == b'nossl':
+            elif key == 'peercert':
+                cert_info = bytes.decode(info[1])
+                if cert_info == 'nossl':
                     self.cert = 'nossl'
                 else:
                     self.cert_cn = cert_info[0]
                     self.cert_dn = cert_info[0]
             else:
-                return "error"
+                continue
 
     def __str__(self):
         s = f"EmqxConnectionInfo{{\n socketType='{self.socket_type}'\n socketIP='{self.socket_ip}'\n socketPort='{self.socket_name}' \n peerNameIp='{self.peername_ip}' \n peerNamePort='{self.peername_port}' \n cert='{self.cert}' \n cert_cn='{self.cert_cn}' \n cert_dn='{self.cert_dn}'\n}}"

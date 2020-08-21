@@ -1,19 +1,25 @@
-from erlport import Atom
+class ConstantsMeta(type):
+    def __setattr__(self, key, value):
+        raise AttributeError(f"you can't set this attribute: {key} = {value}")
 
-class SockType:
+class BaseConstant(metaclass=ConstantsMeta):
+    ...
+
+class SockType(BaseConstant):
     TCP = 'tcp'
     TLS = 'tls'
     UDP = 'udp'
     DTLS = 'dtls'
 
     def get_socktype(self, atom):
-        if atom == b'tcp':
+        sock_type = bytes.decode(atom)
+        if sock_type == 'tcp':
             return self.TCP
-        elif atom == b'tls':
+        elif sock_type == 'tls':
             return self.TLS
-        elif atom == b'udp':
+        elif sock_type == 'udp':
             return self.UDP
-        elif atom == b'dtls':
+        elif sock_type == 'dtls':
             return self.DTLS
         else:
             return None
