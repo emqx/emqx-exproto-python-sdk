@@ -3,7 +3,28 @@ from erlport import erlang
 from sock_type import SockType
 
 class Connection:
-    ...
+    node = None
+    idd = None
+    serial = None
+    creation = None
+    pid = None
+
+    def __init__(self, node=None, idd=None, serial=None, creation=None, pid=None):
+        if pid:
+            self.pid = pid
+            self.node = pid.node
+            self.idd = pid.idd
+            self.serial = pid.serial
+            self.creation = pid.creation
+        else:        
+            self.node = node
+            self.idd = idd
+            self.serial = serial
+            self.creation = creation
+    
+    def __str__(self):
+        s = f"Connection{{ \n node={self.node} \n id={self.idd} \n serial={self.serial} \n creation={self.creation} \n}}"
+        return s
 
 class ConnectionInfo:
 
@@ -40,5 +61,5 @@ class ConnectionInfo:
                 return "error"
 
     def __str__(self):
-        s = "EmqxConnectionInfo{\n socketType='{self.socket_type}'\n socketIP='{self.socket_ip}'\n socketPort='{self.socket_name}' \n peerNameIp='{self.peername_ip}' \n peerNamePort='{self.peername_port}' \n cert='{self.cert}' \n cert_cn='{self.cert_cn}' \n cert_dn='{self.cert_dn}'\n}"
+        s = f"EmqxConnectionInfo{{\n socketType='{self.socket_type}'\n socketIP='{self.socket_ip}'\n socketPort='{self.socket_name}' \n peerNameIp='{self.peername_ip}' \n peerNamePort='{self.peername_port}' \n cert='{self.cert}' \n cert_cn='{self.cert_cn}' \n cert_dn='{self.cert_dn}'\n}}"
         return s
