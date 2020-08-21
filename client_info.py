@@ -20,12 +20,12 @@ class ClientInfo:
     @staticmethod
     def to_erlang_data_type(client_info: ClientInfo) -> list:
         client_info_list = []
-        client_info_list.append((Atom("proto_name"), to_binary(client_info.proto_name)))
-        client_info_list.append((Atom("proto_ver"), to_binary(client_info.proto_version)))
-        client_info_list.append((Atom("clientid"), to_binary(client_info.client_id)))
-        client_info_list.append((Atom("username"), to_binary(client_info.user_name)))
-        client_info_list.append((Atom("mountpoint"), to_binary(client_info.mount_point)))
-        client_info_list.append((Atom("keepalive"), to_binary(client_info.keep_alive)))
+        client_info_list.append((Atom(b"proto_name"), to_binary(client_info.proto_name)))
+        client_info_list.append((Atom(b"proto_ver"), to_binary(client_info.proto_version)))
+        client_info_list.append((Atom(b"clientid"), to_binary(client_info.client_id)))
+        client_info_list.append((Atom(b"username"), to_binary(client_info.user_name)))
+        client_info_list.append((Atom(b"mountpoint"), to_binary(client_info.mount_point)))
+        client_info_list.append((Atom(b"keepalive"), to_binary(client_info.keep_alive)))
         return client_info_list
 
     def __str__(self):

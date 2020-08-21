@@ -40,19 +40,19 @@ class ConnectionInfo:
     def parser(self, connInfo):
         for info in connInfo:
             key = info[0]
-            if key == Atom(b'socktype'):
+            if key == b'socktype':
                 socktype = SockType()
                 self.socket_type = socktype.get_socktype(info[1])
-            elif key == Atom(b'peername'):
+            elif key == b'peername':
                 ip_tuple, port = info[1]
                 self.peername_ip = '.'.join(map(str, ip_tuple))
                 self.peername_port = port
-            elif key == Atom(b'sockname'):
+            elif key == b'sockname':
                 self.socket_ip = '.'.join(map(str, ip_tuple))
                 self.socket_name = port
-            elif key == Atom(b'peercert'):
+            elif key == b'peercert':
                 cert_info = info[1]
-                if cert_info == Atom(b'nossl'):
+                if cert_info == b'nossl':
                     self.cert = 'nossl'
                 else:
                     self.cert_cn = cert_info[0]
