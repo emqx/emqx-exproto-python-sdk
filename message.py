@@ -1,16 +1,17 @@
 from erlport import Atom
 from until import to_binary
-import itertools
+
 
 class Message:
-    idd: str 
+    idd: str
     qos: str
     from_: str
     topic: str
     payload: str
     timestamp: int
 
-    def __init__(self, idd: str=None, qos: int=None, from_: str=None, topic: str=None, payload: str=None, timestamp: int=None):
+    def __init__(self, idd: str = None, qos: int = None, from_: str = None, topic: str = None,
+                 payload: str = None, timestamp: int = None):
         self.idd = idd
         self.qos = qos
         self.from_ = from_
@@ -25,8 +26,8 @@ class Message:
             message_list.append(Message.parse_one(msg))
         return message_list
 
-    @staticmethod 
-    def parse_one(msg_tuple: tuple) -> Message:
+    @staticmethod
+    def parse_one(msg_tuple: tuple) -> 'Message':
         message = Message()
         for msg_obj in msg_tuple:
             key = bytes.decode(Atom(msg_obj[0]))
@@ -46,14 +47,25 @@ class Message:
             else:
                 continue
         return message
-        
-    def toErlangDataType(self, msg: Message):
-        atom_list = [Atom(b'id'), Atom(b'qos'), Atom(b'from'), Atom(b'topic'), Atom(b'payload'), Atom(b'tamptime')]
-        msg_list = list(map(to_binary, [msg.idd, msg.qos, msg.from_, msg.topic, msg.payload, msg.timestamp]))
 
-        tuple_list = list(itertools.product(atom_list, msg_list))
+    @staticmethod
+    def to_erlang_data_type(msg):
+        tuple_list = [
+            (Atom(b'id'), to_binary(msg.id)),
+            (Atom(b'qos'), to_binary(msg.qos)),
+            (Atom(b'from'), to_binary(msg.from_)),
+            (Atom(b'topic'), to_binary(msg.topic)),
+            (Atom(b'payload'), to_binary(msg.payload)),
+        ]
         return tuple_list
 
     def __str__(self):
-        s = f"EmqxDeliverMessage{{\n id={self.idd},\n qos={self.qos},\n from={self.from_},\n topic={self.topic},\n payload={self.payload},\n timestamp={self.timestamp}\n}}"
+        s = f"EmqxDeliverMessage{{\n " \
+            f"id={self.idd},\n " \
+            f"qos={self.qos},\n " \
+            f"from={self.from_},\n " \
+            f"topic={self.topic},\n " \
+            f"payload={self.payload},\n " \
+            f"timestamp={self.timestamp}\n" \
+            f"}}"
         return s
