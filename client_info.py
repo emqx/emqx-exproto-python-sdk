@@ -31,11 +31,11 @@ class ClientInfo:
         return client_info_list
 
     def __str__(self):
-        s = f"ClientInfo{{\n " \
+        string = f"ClientInfo{{\n " \
             f"protoName={self.proto_name}\n " \
             f"protoVersion={self.proto_version}\n " \
             f"clientId={self.client_id}\n " \
             f"userName={self.user_name}\n " \
             f"mountPoint={self.mount_point}\n " \
             f"keepAlive={self.keep_alive}\n }}"
-        return s
+        return string

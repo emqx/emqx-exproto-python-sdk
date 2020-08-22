@@ -22,24 +22,24 @@ class Connection:
             self.creation = creation
 
     def __str__(self):
-        s = f"Connection{{ \n " \
+        string = f"Connection{{ \n " \
             f"node={self.node} \n " \
             f"id={self.idd} \n " \
             f"serial={self.serial} \n " \
             f"creation={self.creation} \n" \
             f"}}"
-        return s
+        return string
 
 
 class ConnectionInfo:
-    socket_type: str
-    peername_ip: str
-    peername_port: int
-    socket_ip: str
-    socket_name: int
-    cert: str
-    cert_cn: str
-    cert_dn: str
+    socket_type: str = ''
+    peername_ip: str = ''
+    peername_port: int = 0
+    socket_ip: str = ''
+    socket_name: int = 0
+    cert: str = ''
+    cert_cn: str = ''
+    cert_dn: str = ''
 
     def __init__(self, connInfo) -> 'ConnectionInfo':
         for info in connInfo:
@@ -65,7 +65,7 @@ class ConnectionInfo:
                 continue
 
     def __str__(self):
-        s = f"EmqxConnectionInfo{{\n " \
+        string = f"EmqxConnectionInfo{{\n " \
             f"socketType='{self.socket_type}'\n " \
             f"socketIP='{self.socket_ip}'\n " \
             f"socketPort='{self.socket_name}' \n " \
@@ -75,4 +75,4 @@ class ConnectionInfo:
             f"cert_cn='{self.cert_cn}' \n " \
             f"cert_dn='{self.cert_dn}'\n" \
             f"}}"
-        return s
+        return string

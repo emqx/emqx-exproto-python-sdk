@@ -10,8 +10,8 @@ class Message:
     payload: str
     timestamp: int
 
-    def __init__(self, idd: str = None, qos: int = None, from_: str = None, topic: str = None,
-                 payload: str = None, timestamp: int = None):
+    def __init__(self, idd: str = '', qos: int = 0, from_: str = '', topic: str = '',
+                 payload: str = '', timestamp: int = 0):
         self.idd = idd
         self.qos = qos
         self.from_ = from_
@@ -60,7 +60,7 @@ class Message:
         return tuple_list
 
     def __str__(self):
-        s = f"EmqxDeliverMessage{{\n " \
+        string = f"EmqxDeliverMessage{{\n " \
             f"id={self.idd},\n " \
             f"qos={self.qos},\n " \
             f"from={self.from_},\n " \
@@ -68,4 +68,4 @@ class Message:
             f"payload={self.payload},\n " \
             f"timestamp={self.timestamp}\n" \
             f"}}"
-        return s
+        return string
