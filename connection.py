@@ -1,6 +1,5 @@
-from erlport import Atom
-from erlport import erlang
 from sock_type import SockType
+
 
 class Connection:
     node = None
@@ -16,28 +15,33 @@ class Connection:
             self.idd = pid.idd
             self.serial = pid.serial
             self.creation = pid.creation
-        else:        
+        else:
             self.node = node
             self.idd = idd
             self.serial = serial
             self.creation = creation
-    
+
     def __str__(self):
-        s = f"Connection{{ \n node={self.node} \n id={self.idd} \n serial={self.serial} \n creation={self.creation} \n}}"
+        s = f"Connection{{ \n " \
+            f"node={self.node} \n " \
+            f"id={self.idd} \n " \
+            f"serial={self.serial} \n " \
+            f"creation={self.creation} \n" \
+            f"}}"
         return s
 
+
 class ConnectionInfo:
+    socket_type: str
+    peername_ip: str
+    peername_port: int
+    socket_ip: str
+    socket_name: int
+    cert: str
+    cert_cn: str
+    cert_dn: str
 
-    socket_type: str = None
-    peername_ip: str = None
-    peername_port: int = None
-    socket_ip: str = None
-    socket_name: int  = None
-    cert: str = None
-    cert_cn = None
-    cert_dn = None
-
-    def parser(self, connInfo):
+    def __init__(self, connInfo) -> 'ConnectionInfo':
         for info in connInfo:
             key = bytes.decode(info[0])
             if key == 'socktype':
@@ -61,5 +65,14 @@ class ConnectionInfo:
                 continue
 
     def __str__(self):
-        s = f"EmqxConnectionInfo{{\n socketType='{self.socket_type}'\n socketIP='{self.socket_ip}'\n socketPort='{self.socket_name}' \n peerNameIp='{self.peername_ip}' \n peerNamePort='{self.peername_port}' \n cert='{self.cert}' \n cert_cn='{self.cert_cn}' \n cert_dn='{self.cert_dn}'\n}}"
+        s = f"EmqxConnectionInfo{{\n " \
+            f"socketType='{self.socket_type}'\n " \
+            f"socketIP='{self.socket_ip}'\n " \
+            f"socketPort='{self.socket_name}' \n " \
+            f"peerNameIp='{self.peername_ip}' \n " \
+            f"peerNamePort='{self.peername_port}' \n " \
+            f"cert='{self.cert}' \n " \
+            f"cert_cn='{self.cert_cn}' \n " \
+            f"cert_dn='{self.cert_dn}'\n" \
+            f"}}"
         return s

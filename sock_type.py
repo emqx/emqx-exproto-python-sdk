@@ -2,8 +2,10 @@ class ConstantsMeta(type):
     def __setattr__(self, key, value):
         raise AttributeError(f"you can't set this attribute: {key} = {value}")
 
+
 class BaseConstant(metaclass=ConstantsMeta):
     ...
+
 
 class SockType(BaseConstant):
     TCP = 'tcp'
@@ -23,4 +25,3 @@ class SockType(BaseConstant):
             return self.DTLS
         else:
             return None
-    

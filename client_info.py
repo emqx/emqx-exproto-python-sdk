@@ -1,14 +1,17 @@
 from erlport import Atom
 from until import to_binary
-class ClientInfo:
-    proto_name: str = None
-    proto_version: str = None
-    client_id: str = None
-    user_name: str = None
-    mount_point: str = None
-    keep_alive: str = None
 
-    def __init__(self, proto_name: str, proto_version: str, client_id: str, user_name: str, mount_point: str, keep_alive: int):
+
+class ClientInfo:
+    proto_name: str
+    proto_version: str
+    client_id: str
+    user_name: str
+    mount_point: str
+    keep_alive: int
+
+    def __init__(self, proto_name: str = '', proto_version: str = '', client_id: str = '',
+                 user_name: str = '', mount_point: str = '', keep_alive: int = 0):
         self.proto_name = proto_name
         self.proto_version = proto_version
         self.client_id = client_id
@@ -16,18 +19,23 @@ class ClientInfo:
         self.mount_point = mount_point
         self.keep_alive = keep_alive
 
-
-    @staticmethod
-    def to_erlang_data_type(client_info: ClientInfo) -> list:
-        client_info_list = []
-        client_info_list.append((Atom(b"proto_name"), to_binary(client_info.proto_name)))
-        client_info_list.append((Atom(b"proto_ver"), to_binary(client_info.proto_version)))
-        client_info_list.append((Atom(b"clientid"), to_binary(client_info.client_id)))
-        client_info_list.append((Atom(b"username"), to_binary(client_info.user_name)))
-        client_info_list.append((Atom(b"mountpoint"), to_binary(client_info.mount_point)))
-        client_info_list.append((Atom(b"keepalive"), to_binary(client_info.keep_alive)))
+    def to_erlang_data_type(self) -> list:
+        client_info_list = [
+            (Atom(b"proto_name"), to_binary(self.proto_name)),
+            (Atom(b"proto_ver"), to_binary(self.proto_version)),
+            (Atom(b"clientid"), to_binary(self.client_id)),
+            (Atom(b"username"), to_binary(self.user_name)),
+            (Atom(b"mountpoint"), to_binary(self.mount_point)),
+            (Atom(b"keepalive"), to_binary(str(self.keep_alive)))
+        ]
         return client_info_list
 
     def __str__(self):
-        s = f"ClientInfo{{\n protoName={self.proto_name}\n protoVersion={self.proto_version}\n clientId={self.client_id}\n userName={self.user_name}\n mountPoint={self.mount_point}\n keepAlive={self.keep_alive}\n }}"
+        s = f"ClientInfo{{\n " \
+            f"protoName={self.proto_name}\n " \
+            f"protoVersion={self.proto_version}\n " \
+            f"clientId={self.client_id}\n " \
+            f"userName={self.user_name}\n " \
+            f"mountPoint={self.mount_point}\n " \
+            f"keepAlive={self.keep_alive}\n }}"
         return s
