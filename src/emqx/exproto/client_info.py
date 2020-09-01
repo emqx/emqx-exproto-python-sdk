@@ -1,5 +1,5 @@
 from erlport import Atom
-from until import to_binary
+from .until import to_binary
 
 
 class ClientInfo:
