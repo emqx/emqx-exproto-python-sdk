@@ -1,5 +1,5 @@
-from abstract_handler import AbstractExProtoHandler
-from connection import Connection, ConnectionInfo
+from emqx.exproto.abstract_handler import AbstractExProtoHandler
+from emqx.exproto.connection import Connection, ConnectionInfo
 
 
 class SdkDemo(AbstractExProtoHandler):
