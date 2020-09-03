@@ -1,9 +1,9 @@
 from abc import ABCMeta, abstractmethod
 
+from emqx.erlport import erlang
 from .connection import Connection, ConnectionInfo
 from .client_info import ClientInfo
 from .message import Message
-from ..erlport import erlang
 
 class AbstractExProtoHandler(metaclass=ABCMeta):
 
