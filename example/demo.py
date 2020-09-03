@@ -21,3 +21,4 @@ class SdkDemo(AbstractExProtoHandler):
             print(message)
 
 driver.exproto_driver = SdkDemo()
+
