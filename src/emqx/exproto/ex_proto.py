@@ -1,10 +1,9 @@
 from typing import Tuple
 
 from abstract_handler import AbstractExProtoHandler
-from connection import Connection, ConnectionInfo
-from demo import SdkDemo
-from erlport.erlterms import Pid
-from message import Message
+from .connection import Connection, ConnectionInfo
+from ..erlport.erlterms import Pid
+from .message import Message
 
 
 class ExProto:
@@ -37,8 +36,3 @@ class ExProto:
         msg_list = Message.parse(msgs)
         self.handler.on_deliver(connection, msg_list)
         return self.OK, state
-
-
-if __name__ == "__main__":
-    sdk = SdkDemo()
-    ex_proto = ExProto(sdk)
