@@ -1,4 +1,4 @@
-from sock_type import SockType
+from .sock_type import SockType
 
 
 class Connection:
