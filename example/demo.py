@@ -1,6 +1,6 @@
+from emqx.exproto.core import *
 from emqx.exproto.abstract_handler import AbstractExProtoHandler
 from emqx.exproto.connection import Connection, ConnectionInfo
-
 
 class SdkDemo(AbstractExProtoHandler):
     def on_connect(self, connection: Connection, connection_info: ConnectionInfo):
@@ -9,7 +9,7 @@ class SdkDemo(AbstractExProtoHandler):
 
     def on_received(self, connection: Connection, data: bytes, state: any):
         print(connection)
-        print(bytes.decode(data))
+        print(data)
 
     def on_terminated(self, connection: Connection, reason: str, state: any):
         print(connection)
@@ -19,3 +19,5 @@ class SdkDemo(AbstractExProtoHandler):
         print(connection)
         for message in message_list:
             print(message)
+
+driver.exproto_driver = SdkDemo()

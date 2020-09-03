@@ -4,7 +4,7 @@ import sys
 requirements = ['emqx-erlport']
 
 sys.path.insert(0, 'src')
-__version__ = '0.1'
+__version__ = '0.1.2'
 
 setup(
     name='emqx-exproto',
