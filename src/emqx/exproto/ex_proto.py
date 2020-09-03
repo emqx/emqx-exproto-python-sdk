@@ -1,8 +1,10 @@
+# needless
+
 from typing import Tuple
 
 from abstract_handler import AbstractExProtoHandler
+from emqx.erlport.erlterms import Pid
 from .connection import Connection, ConnectionInfo
-from ..erlport.erlterms import Pid
 from .message import Message
 
 

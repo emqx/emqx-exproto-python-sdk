@@ -4,10 +4,34 @@ The Python SDK for emqx-exproto
 
 ### Installation
 
+You can install py pip
+> pip3 install emqx-exproto
+
 You can clone the git repository:
 > git clone https://github.com/emqx/emqx-exproto-python-sdk.git
 > cd emqx-exproto-python-sdk
 > python3 setup.py install
+
+### Get Started
+
+- First of all, follow the step Installation to install dependencies
+- create your Python project.
+
+### Deploy
+
+After compiled all source codes, you should deploy the sdk and your class files into EMQ X.
+
+Copy your class files, e.g: example/demo.py to emqx/data/extension directory.
+
+Modify the emqx/etc/plugins/emqx_exproto.conf file. e.g:
+
+exproto.listener.protoname = tcp://0.0.0.0:7993
+exproto.listener.protoname.driver = python
+exproto.listener.protoname.driver_search_path = data/extension
+exproto.listener.protoname.driver_callback_module = demo
+Execute bin/emqx console to start EMQ X and load the emqx_exproto plugin.
+
+Use `telnet 127.0.0.1 7993` to establish a TCP connection and observe the console output.
 
 ### Interface
 
@@ -78,18 +102,22 @@ subscribe(connection: Connection, topic: str, qos: int)
 ### Example
 
 ```python
+from emqx.exproto.core import *
 from emqx.exproto.abstract_handler import AbstractExProtoHandler
 from emqx.exproto.connection import Connection, ConnectionInfo
 
+import emqx.exproto.driver as driver
 
 class SdkDemo(AbstractExProtoHandler):
+    # In this class, you need to implement abstract AbstractExProtoHandler
+
     def on_connect(self, connection: Connection, connection_info: ConnectionInfo):
         print(connection)
         print(connection_info)
 
     def on_received(self, connection: Connection, data: bytes, state: any):
         print(connection)
-        print(bytes.decode(data))
+        print(data)
 
     def on_terminated(self, connection: Connection, reason: str, state: any):
         print(connection)
@@ -99,6 +127,9 @@ class SdkDemo(AbstractExProtoHandler):
         print(connection)
         for message in message_list:
             print(message)
+
+# set exproto_driver
+driver.exproto_driver = SdkDemo()
 ```
 
 

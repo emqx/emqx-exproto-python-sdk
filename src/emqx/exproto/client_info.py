@@ -1,4 +1,4 @@
-from ..erlport.erlterms import Atom
+from emqx.erlport.erlterms import Atom
 from .until import to_binary
 
 
