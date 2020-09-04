@@ -2,42 +2,54 @@
 
 The Python SDK for emqx-exproto
 
-### Installation
+## Installation
 
-You can install py pip
-> pip3 install emqx-exproto
+There are the following ways to install this library
 
-You can clone the git repository:
-> git clone https://github.com/emqx/emqx-exproto-python-sdk.git
-> cd emqx-exproto-python-sdk
-> python3 setup.py install
+#### Install by Pypi
 
-### Get Started
+```bash
+pip3 install emqx-exproto
+```
+
+#### Install from source code
+
+```bash
+git clone https://github.com/emqx/emqx-exproto-python-sdk.git
+
+cd emqx-exproto-python-sdk
+
+python3 setup.py install
+```
+
+## Get Started
 
 - First of all, follow the step Installation to install dependencies
-- create your Python project.
+- Create your Python project
 
-### Deploy
+## Deploy
 
-After compiled all source codes, you should deploy the sdk and your class files into EMQ X.
+After compiled all source codes, you should deploy the sdk and your source files into emqx:
 
-Copy your class files, e.g: example/demo.py to emqx/data/extension directory.
+1. Ensure the emqx hosted machine has installed the `emqx-exproto-python-sdk`.
+2. Copy your source code files. E.g: copy `example/demo.py` to `emqx/data/extension` directory.
+3. Modify the `emqx/etc/plugins/emqx_exproto.conf` file. e.g:
 
-Modify the emqx/etc/plugins/emqx_exproto.conf file. e.g:
-
-exproto.listener.protoname = tcp://0.0.0.0:7993
-exproto.listener.protoname.driver = python
-exproto.listener.protoname.driver_search_path = data/extension
-exproto.listener.protoname.driver_callback_module = demo
-Execute bin/emqx console to start EMQ X and load the emqx_exproto plugin.
+    ```properties
+    exproto.listener.protoname = tcp://0.0.0.0:7993
+    exproto.listener.protoname.driver = python
+    exproto.listener.protoname.driver_search_path = data/extension
+    exproto.listener.protoname.driver_callback_module = demo
+    ```
+4. Execute `bin/emqx console` to start emqx and load the `emqx_exproto` plugin.
 
 Use `telnet 127.0.0.1 7993` to establish a TCP connection and observe the console output.
 
-### Interface
+## Interface
 
-#### Callbacks
+### Callbacks
 
-**Connection Layer callbacks**(The Connection object represents a TCP/UDP Socket entity):
+**Connection Layer callbacks** (The Connection object represents a TCP/UDP Socket entity):
 
 ```python
 // This function will be scheduled after a TCP connection established to EMQ X
@@ -66,9 +78,9 @@ on_terminated(connection: Connection, reason: str, state: any)
 on_deliver(connection: Connection, message_list: list)
 ```
 
-#### APIs
+### APIs
 
-Similarly, AbstractExprotoHandler also provides a set of APIs to facilitate the use of the emqx-exproto APIs.
+Similarly, AbstractExprotoHandler also provides a set of APIs to facilitate the use of the `emqx-exproto` APIs.
 
 **Connection Layer APIs:**
 
@@ -99,7 +111,7 @@ publish(connection: Connection, message: Message)
 subscribe(connection: Connection, topic: str, qos: int)
 ```
 
-### Example
+## Example
 
 ```python
 from emqx.exproto.core import *
@@ -132,11 +144,10 @@ class SdkDemo(AbstractExProtoHandler):
 driver.exproto_driver = SdkDemo()
 ```
 
-
-### License
+## License
 
 Apache License v2
 
-### Author
+## Author
 
 - [Adek06](https://github.com/Adek06)
