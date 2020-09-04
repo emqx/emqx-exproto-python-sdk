@@ -35,8 +35,8 @@ class ConnectionInfo:
     socket_type: str = ''
     peername_ip: str = ''
     peername_port: int = 0
-    socket_ip: str = ''
-    socket_name: int = 0
+    sockname_ip: str = ''
+    sockname_port: int = 0
     cert: str = ''
     cert_cn: str = ''
     cert_dn: str = ''
@@ -52,8 +52,8 @@ class ConnectionInfo:
                 self.peername_ip = '.'.join(map(str, ip_tuple))
                 self.peername_port = port
             elif key == 'sockname':
-                self.socket_ip = '.'.join(map(str, ip_tuple))
-                self.socket_name = port
+                self.sockname_ip = '.'.join(map(str, ip_tuple))
+                self.sockname_port = port
             elif key == 'peercert':
                 cert_info = bytes.decode(info[1])
                 if cert_info == 'nossl':
@@ -67,10 +67,10 @@ class ConnectionInfo:
     def __str__(self):
         string = f"EmqxConnectionInfo{{\n " \
             f"socketType='{self.socket_type}'\n " \
-            f"socketIP='{self.socket_ip}'\n " \
-            f"socketPort='{self.socket_name}' \n " \
-            f"peerNameIp='{self.peername_ip}' \n " \
-            f"peerNamePort='{self.peername_port}' \n " \
+            f"socknameIp='{self.sockname_ip}'\n " \
+            f"socknamePort='{self.sockname_port}' \n " \
+            f"peernameIp='{self.peername_ip}' \n " \
+            f"peernamePort='{self.peername_port}' \n " \
             f"cert='{self.cert}' \n " \
             f"cert_cn='{self.cert_cn}' \n " \
             f"cert_dn='{self.cert_dn}'\n" \
