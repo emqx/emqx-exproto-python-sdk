@@ -20,10 +20,11 @@ class SdkDemo(AbstractExProtoHandler):
     def on_connect(self, connection: Connection, connection_info: ConnectionInfo):
         print(connection)
         print(connection_info)
+        self.subscribe(connection, b"t/dn", 0)
 
     def on_received(self, connection: Connection, data: bytes, state: any):
         print(connection)
-        print(data)
+        self.send(connection, data)
 
     def on_terminated(self, connection: Connection, reason: str, state: any):
         print(connection)

@@ -12,8 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from erlport.erlterms import Pid
 from .sock_type import SockType
 
+class Sockname:
+    host = None
+    port = None
+
+    def __init__(self, host, port):
+        self.host = host
+        self.port = port
+
+class Peername:
+    host = None
+    port = None
+
+    def __init__(self, host, port):
+        self.host = host
+        self.port = port
 
 class Connection:
     node = None
@@ -35,12 +51,13 @@ class Connection:
             self.serial = serial
             self.creation = creation
 
+
     def __str__(self):
-        string = f"Connection{{ \n " \
-            f"node={self.node} \n " \
-            f"id={self.idd} \n " \
-            f"serial={self.serial} \n " \
-            f"creation={self.creation} \n" \
+        string = f"Connection{{ " \
+            f"node={self.node}, " \
+            f"id={self.idd}, " \
+            f"serial={self.serial}, " \
+            f"creation={self.creation}" \
             f"}}"
         return string
 
@@ -49,8 +66,8 @@ class ConnectionInfo:
     socket_type: str = ''
     peername_ip: str = ''
     peername_port: int = 0
-    sockname_ip: str = ''
-    sockname_port: int = 0
+    sockname: Sockname = None
+    peername: Peername = None
     cert: str = ''
     cert_cn: str = ''
     cert_dn: str = ''
@@ -63,11 +80,13 @@ class ConnectionInfo:
                 self.socket_type = socktype.get_socktype(info[1])
             elif key == 'peername':
                 ip_tuple, port = info[1]
-                self.peername_ip = '.'.join(map(str, ip_tuple))
-                self.peername_port = port
+                peername_host = '.'.join(map(str, ip_tuple))
+                peername_port = port
+                self.peername = Peername(peername_host, peername_port)
             elif key == 'sockname':
-                self.sockname_ip = '.'.join(map(str, ip_tuple))
-                self.sockname_port = port
+                sockname_host = '.'.join(map(str, ip_tuple))
+                sockname_port = port
+                self.sockname = Sockname(sockname_host, sockname_port)
             elif key == 'peercert':
                 cert_info = bytes.decode(info[1])
                 if cert_info == 'nossl':
@@ -79,14 +98,14 @@ class ConnectionInfo:
                 continue
 
     def __str__(self):
-        string = f"ConnectionInfo{{\n " \
-            f"socketType='{self.socket_type}'\n " \
-            f"socknameIp='{self.sockname_ip}'\n " \
-            f"socknamePort='{self.sockname_port}' \n " \
-            f"peernameIp='{self.peername_ip}' \n " \
-            f"peernamePort='{self.peername_port}' \n " \
-            f"cert='{self.cert}' \n " \
-            f"cert_cn='{self.cert_cn}' \n " \
-            f"cert_dn='{self.cert_dn}'\n" \
+        string = f"ConnectionInfo{{ " \
+            f"socketType='{self.socket_type}', " \
+            f"socknameIp='{self.sockname.host}', " \
+            f"socknamePort='{self.sockname.port}', " \
+            f"peernameIp='{self.peername.host}', " \
+            f"peernamePort='{self.peername.port}', " \
+            f"cert='{self.cert}', " \
+            f"cert_cn='{self.cert_cn}', " \
+            f"cert_dn='{self.cert_dn}'" \
             f"}}"
         return string

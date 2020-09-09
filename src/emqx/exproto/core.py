@@ -14,8 +14,8 @@
 
 from typing import Tuple
 
-from emqx.erlport.erlterms import Pid
-from emqx.erlport import erlang
+from erlport.erlterms import Pid
+from erlport import erlang
 from .connection import Connection, ConnectionInfo
 from .message import Message
 

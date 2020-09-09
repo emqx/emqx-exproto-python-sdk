@@ -15,16 +15,16 @@
 from setuptools import setup, find_packages
 import sys
 
-requirements = ['emqx-erlport']
+requirements = []
 
 sys.path.insert(0, 'src')
-__version__ = '0.1.2'
+__version__ = '0.1.4'
 
 
 setup(
-    name='emqx-exproto',
+    name='emqx-exproto-sdk',
     version=__version__,
-    description='',
+    description='The Python SDK for emqx-exproto',
     author='adek06',
     author_email='adek06@outlook.com',
     url='https://github.com/emqx/emqx-exproto-python-sdk',

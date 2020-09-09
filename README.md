@@ -9,7 +9,7 @@ There are the following ways to install this library
 #### Install by Pypi
 
 ```bash
-pip3 install emqx-exproto
+pip3 install emqx-exproto-sdk
 ```
 
 #### Install from source code
