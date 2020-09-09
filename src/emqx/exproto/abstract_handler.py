@@ -14,12 +14,11 @@
 
 from abc import ABCMeta, abstractmethod
 
-from emqx.erlport import erlang
-from emqx.erlport.erlterms import Atom
+from erlport import erlang
+from erlport.erlterms import Atom, Pid
 from .connection import Connection, ConnectionInfo
 from .client_info import ClientInfo
 from .message import Message
-from ..erlport import erlang
 
 class AbstractExProtoHandler(metaclass=ABCMeta):
 
@@ -40,16 +39,16 @@ class AbstractExProtoHandler(metaclass=ABCMeta):
         ...
 
     def send(self, connection: Connection, data: bytes):
-        erlang.call(Atom(b'emqx_exproto'), Atom(b'send'), (connection.pid, data))
+        erlang.call(Atom(b'emqx_exproto'), Atom(b'send'), [connection.pid, data])
 
     def terminate(self, connection: Connection):
-        erlang.call(Atom(b'emqx_exproto'), Atom(b'close'), (connection.pid))
+        erlang.call(Atom(b'emqx_exproto'), Atom(b'close'), [connection.pid])
 
     def register(self, connection: Connection, client_info: ClientInfo):
-        erlang.call(Atom(b'emqx_exproto'), Atom(b'register'), (connection.pid, client_info.to_erlang_data_type()))
+        erlang.call(Atom(b'emqx_exproto'), Atom(b'register'), [connection.pid, client_info.to_erlang_data_type()])
 
     def publish(self, connection: Connection, message: Message):
-        erlang.call(Atom(b'emqx_exproto'), Atom(b'publish'), (connection.pid, message.to_erlang_data_type()))
+        erlang.call(Atom(b'emqx_exproto'), Atom(b'publish'), [connection.pid, message.to_erlang_data_type()])
 
     def subscribe(self, connection: Connection, topic: str, qos: int):
-        erlang.call(Atom(b'emqx_exproto'), Atom(b'subscribe'), (connection.pid, bytes(topic), qos))
+        erlang.call(Atom(b'emqx_exproto'), Atom(b'subscribe'), [connection.pid, bytes(topic), qos])

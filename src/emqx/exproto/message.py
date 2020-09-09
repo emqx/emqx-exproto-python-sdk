@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from emqx.erlport.erlterms import Atom
+from erlport.erlterms import Atom
 from .until import to_binary
 
 

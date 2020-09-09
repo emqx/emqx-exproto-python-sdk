@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from emqx.erlport.erlterms import Atom
+from erlport.erlterms import Atom
 from .until import to_binary
 
 
@@ -45,11 +45,11 @@ class ClientInfo:
         return client_info_list
 
     def __str__(self):
-        string = f"ClientInfo{{\n " \
-            f"protoName={self.proto_name}\n " \
-            f"protoVersion={self.proto_version}\n " \
-            f"clientId={self.client_id}\n " \
-            f"username={self.username}\n " \
-            f"mountpoint={self.mountpoint}\n " \
-            f"keepalive={self.keepalive}\n }}"
+        string = f"ClientInfo{{ " \
+            f"protoName={self.proto_name} " \
+            f"protoVersion={self.proto_version} " \
+            f"clientId={self.client_id} " \
+            f"username={self.username} " \
+            f"mountpoint={self.mountpoint} " \
+            f"keepalive={self.keepalive} }}"
         return string

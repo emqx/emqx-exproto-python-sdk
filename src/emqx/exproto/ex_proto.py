@@ -15,7 +15,7 @@
 from typing import Tuple
 
 from abstract_handler import AbstractExProtoHandler
-from emqx.erlport.erlterms import Pid
+from erlport.erlterms import Pid
 from .connection import Connection, ConnectionInfo
 from .message import Message
 
