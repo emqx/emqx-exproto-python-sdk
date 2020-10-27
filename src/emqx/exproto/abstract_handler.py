@@ -48,7 +48,7 @@ class AbstractExProtoHandler(metaclass=ABCMeta):
         erlang.call(Atom(b'emqx_exproto'), Atom(b'register'), [connection.pid, client_info.to_erlang_data_type()])
 
     def publish(self, connection: Connection, message: Message):
-        erlang.call(Atom(b'emqx_exproto'), Atom(b'publish'), [connection.pid, Message.to_erlang_data_type(messages)])
+        erlang.call(Atom(b'emqx_exproto'), Atom(b'publish'), [connection.pid, Message.to_erlang_data_type(message)])
 
     def subscribe(self, connection: Connection, topic: str, qos: int):
         erlang.call(Atom(b'emqx_exproto'), Atom(b'subscribe'), [connection.pid, bytes(topic), qos])
