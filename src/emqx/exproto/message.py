@@ -65,8 +65,8 @@ class Message:
     @staticmethod
     def to_erlang_data_type(msg):
         tuple_list = [
-            (Atom(b'id'), to_binary(msg.id)),
-            (Atom(b'qos'), to_binary(msg.qos)),
+            (Atom(b'id'), to_binary(msg.idd)),
+            (Atom(b'qos'), msg.qos),
             (Atom(b'from'), to_binary(msg.from_)),
             (Atom(b'topic'), to_binary(msg.topic)),
             (Atom(b'payload'), to_binary(msg.payload)),
